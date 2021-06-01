@@ -12,6 +12,10 @@ import io
 # 64, 64, 'P', 128, 128, 'P', 256, 256, 256, 256, 'P', 512, 512, 512, 512, 'P', 512, 512, 512, 512, 'P'
 normalize_stats = ([103.939, 116.779, 123.68], [1,1,1])
 channels = [64, 64, 'P', 128, 128, 'P', 256, 256, 256, 256, 'P', 512, 512, 512, 512, 'P', 512, 512, 512, 512, 'P']
+content_layers = ['r4_2']
+style_layers = ['r1_1','r2_1','r3_1','r4_1','r5_1']
+content_weight = 10 #5
+style_weight = 9000 #500
 
 class GramMatrix(nn.Module):
   def forward(self, x):
@@ -119,7 +123,7 @@ def get_device():
 
   return torch.FloatTensor
 
-def style_transfer(content_im, style_im, im_size, content_weight, style_weight, content_layers, style_layers, cb, num_steps):
+def style_transfer(content_im, style_im, im_size, cb, num_steps, content_weight = content_weight, style_weight = style_weight, content_layers = content_layers, style_layers = style_layers):
   dtype = get_device()
   model = get_model(content_layers, style_layers)
   content_tens, style_tens = preprocess(content_im, im_size).type(dtype), preprocess(style_im, im_size).type(dtype)

@@ -3,10 +3,6 @@ import matplotlib.pyplot as plt
 from style_transfer import style_transfer, deprocess
 
 # Parameters
-content_layers = ['r4_2']
-style_layers = ['r1_1','r2_1','r3_1','r4_1','r5_1']
-content_weight = 10 #5
-style_weight = 9000 #500
 im_size = 512
 
 st.title("Neural Style Transfer")
@@ -14,7 +10,7 @@ st.header("Transferring styles to images")
 
 @st.cache(suppress_st_warning=True)
 def do_style_transfer(content_im, style_im):
-    img = style_transfer(content_im, style_im,  im_size, content_weight, style_weight, content_layers, style_layers, print_progress, 100)
+    img = style_transfer(content_im, style_im, im_size, print_progress, 100)
     img = deprocess(img)
     return img
 
